@@ -86,6 +86,6 @@
     <string name="btnSave">Save</string>
     <string name="newsDesk">News Desk Value</string>
     <string name="arts">Arts</string>
-    <string name="fashionAndStyle">Fashion and Style</string>
+    <string name="fashionAndStyle">Fashion &amp; Style</string>
     <string name="sports">Sports</string>
 </resources>

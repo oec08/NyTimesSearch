@@ -1,6 +1,9 @@
 package com.ocarty.nytimessearch.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -52,6 +54,7 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getApplicationContext().getResources().getString(R.string.news_search_toolbar));
         setSupportActionBar(toolbar);
+
         setUpViews();
         gvResults.setOnScrollListener(new EndlessScrollListener() {
             @Override
@@ -160,6 +163,20 @@ public class SearchActivity extends AppCompatActivity {
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra("beginDate", date);
+            ArrayList<String> newsDeskValues = new ArrayList<>();
+            if(isSportsChecked) {
+                newsDeskValues.add("Sports");
+            }
+            if(isFashionAndDesignChecked) {
+                newsDeskValues.add("Fashion & Style");
+            }
+            if(isArtsChecked) {
+                newsDeskValues.add("Arts");
+            }
+            intent.putStringArrayListExtra("newsDeskValues", newsDeskValues);
+            intent.putExtra("sortOrder", selectedSpinnerValue);
+
             startActivityForResult(intent, REQUEST_CODE);
             return true;
         }
@@ -168,6 +185,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onArticleSearch(View view) {
+        if(!isDeviceOnline()) {
+            Toast.makeText(getApplicationContext(), "Please get Internet Access before Searching", Toast.LENGTH_LONG).show();
+        }
         String query = etQuery.getText().toString();
         articles.clear();
         arrayAdapter.notifyDataSetChanged();
@@ -234,5 +254,16 @@ public class SearchActivity extends AppCompatActivity {
             selectedSpinnerValue = data.getExtras().getString("selectedSpinnerValue");
             date = (data.getExtras().getString("date"));
         }
+    }
+
+    /**
+     * Checks for internet access
+     * @return true if internet access is there, false otherwise
+     */
+    public boolean isDeviceOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

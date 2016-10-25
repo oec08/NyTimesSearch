@@ -59,7 +59,6 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         setCheckBoxValues();
         setUpIntialCalendar();
 
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,9 +84,9 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
 
     }
+
     private void setUpSpinner() {
         sortOrderSpinner.setOnItemSelectedListener(this);
-
         List<String> sortOrder = new ArrayList<String>();
         sortOrder.add("Newest");
         sortOrder.add("Oldest");
