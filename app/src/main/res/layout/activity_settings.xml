@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/tvSortOrder"
+        android:layout_alignTop="@+id/tvSortOrder"
+        android:id="@+id/sortOrderSpinner" />
+    <TextView
+        android:id="@+id/tvNewsDeskValues"
+        android:text="@string/newsDeskValues"
+        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_alignLeft="@+id/tvSortOrder"
+        android:layout_below="@+id/tvSortOrder" />
+
+    <TextView
+        android:text="@string/tvDateSet"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_below="@+id/setDateButton"
+        android:layout_alignStart="@+id/setDateButton"
+        android:id="@+id/tvDateSet"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="@string/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#64B5F6"
+        android:id="@+id/saveSettingsBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="81dp" />
+
+    <Button
+        android:text="@string/btnBeginDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#64B5F6"
+        android:id="@+id/setDateButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/sortOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:id="@+id/tvSortOrder"
+        android:layout_below="@+id/tvDateSet"
+        android:layout_alignParentStart="true" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newsDeskRadioGroup"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/tvNewsDeskValues">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/artCheckBox"
+            android:text="@string/arts">
+
+        </CheckBox>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/fashionCheckBox"
+            android:text="@string/fashionAndStyle">
+
+        </CheckBox>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/sportsCheckBox"
+            android:text="@string/sports">
+
+        </CheckBox>
+    </RadioGroup>
+
+
+</RelativeLayout>
