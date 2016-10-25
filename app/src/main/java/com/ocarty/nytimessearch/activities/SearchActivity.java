@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -61,7 +62,20 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to your AdapterView
-                loadNextDataFromApi(page);
+                if(page > 0) {
+                    page = page - 1;
+                }
+                final int  offset = page;
+                Handler handler = new Handler();
+                Runnable runnableCode = new Runnable() {
+                    @Override
+                    public void run() {
+                        // Do something here on the main thread
+                        Log.d("Waiting a second", "Called on main thread");
+                        loadNextDataFromApi(offset);
+                    }
+                };
+                handler.postDelayed(runnableCode, 1000);
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
@@ -163,20 +177,6 @@ public class SearchActivity extends AppCompatActivity {
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            intent.putExtra("beginDate", date);
-            ArrayList<String> newsDeskValues = new ArrayList<>();
-            if(isSportsChecked) {
-                newsDeskValues.add("Sports");
-            }
-            if(isFashionAndDesignChecked) {
-                newsDeskValues.add("Fashion & Style");
-            }
-            if(isArtsChecked) {
-                newsDeskValues.add("Arts");
-            }
-            intent.putStringArrayListExtra("newsDeskValues", newsDeskValues);
-            intent.putExtra("sortOrder", selectedSpinnerValue);
-
             startActivityForResult(intent, REQUEST_CODE);
             return true;
         }
@@ -185,10 +185,13 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onArticleSearch(View view) {
+        String query = etQuery.getText().toString();
         if(!isDeviceOnline()) {
             Toast.makeText(getApplicationContext(), "Please get Internet Access before Searching", Toast.LENGTH_LONG).show();
         }
-        String query = etQuery.getText().toString();
+        else if(query.isEmpty()) {
+            return;
+        }
         articles.clear();
         arrayAdapter.notifyDataSetChanged();
 
